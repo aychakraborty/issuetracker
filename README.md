@@ -70,4 +70,6 @@ Application Set-up:
 7. Install Tomcat v9.0 server and add to Eclipse IDE. Select jdk 1.11 as your environment run.
 8. Add issuetracker(issuetracker-0.0.1-SNAPSHOT) to Tomcat server in Eclipse IDE.
 9. Double click on Tomcat server. Use port 8080. Increase Timeout to Start 450 s and Stop 150 s.
-10. Run Tomcat server with the project. Once server is up, use postman and follow below for browser payload testing.
+10. Run Tomcat server with the project. Once server is up, use postman and follow below for postman payload testing.
+
+Database Verification Local URL: http://localhost:8080/issuetracker/h2-console/login.jsp - (credentials present in application.properties)
