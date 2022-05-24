@@ -57,7 +57,7 @@ public class PlanHandler {
 		// Filter out list of stories which are estimated and sort it by descending
 		// order to finish off bigger stories at first which will help complete stories
 		// in minimum weeks
-		List<Story> estimatedStoryList = storyList.stream().filter(story -> story.getEstPointVal() > 0)
+		List<Story> estimatedStoryList = storyList.stream().filter(story -> story.getStatus().equals(Status.ESTIMATED))
 				.sorted((f1, f2) -> Integer.compare(f2.getEstPointVal(), f1.getEstPointVal()))
 				.collect(Collectors.toList());
 		// Filter out list of completed stories
