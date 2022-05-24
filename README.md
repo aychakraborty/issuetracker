@@ -73,3 +73,109 @@ Application Set-up:
 10. Run Tomcat server with the project. Once server is up, use postman and follow below for postman payload testing.
 
 Database Verification Local URL: http://localhost:8080/issuetracker/h2-console/login.jsp - (credentials present in application.properties)
+
+Postman Payload Testing:
+
+1. Create some developers
+URL: http://localhost:8080/issuetracker/dev/addDeveloper
+REQUEST:
+{
+"name": "A"
+}
+RESPONSE:
+{
+"id": 1, "name": "A"
+}
+
+Similarly create two more developers - B & C
+
+2. Fetch created developers
+URL: http://localhost:8080/issuetracker/dev/getDevelopersList
+RESPONSE:
+[
+{
+"id": 1, "name": "A"},
+ {"id": 2,
+ "name": "B"}, {"id": 3,
+ "name": "C"}
+]
+
+3. Create some stories
+URL: http://localhost:8080/issuetracker/story/addStory
+REQUEST:
+{
+"title" : "Story 1", "description" : "Story 1", "estPointVal" : 8
+}
+RESPONSE:
+{
+"issueId": 1, "title": "Story 1", "description": "Story 1",
+ "createDt": "2022-05-25", "devName": null,
+ "estPointVal": 8,
+ "status": "ESTIMATED"
+}
+
+Similarly, create more stories like this. Also, create some without 'estPointVal' and some with status as 'Completed'. I have created 10 stories, 8 with 'estPointVal', 1 with 'COMPLETED' status and 1 without 'estPointVal'.
+
+4. Fetch all stories
+URL: http://localhost:8080/issuetracker/story/getStoryList
+RESPONSE:
+[
+{"issueId": 1, "title": "Story 1", "description": "Story 1", "createDt": "2022-05-25", "devName": null, "estPointVal": 8, "status": "ESTIMATED"
+}, {"issueId": 2, "title": "Story 2", "description": "Story 2", "createDt": "2022-05-25", "devName": null, 
+ "estPointVal": 2, 
+ "status": "ESTIMATED"}, {"issueId": 3, "title": "Story 3", "description": "Story 3", "createDt": "2022-05-25", 
+ "devName": null, "estPointVal": 8, 
+ "status": "ESTIMATED"
+}, 
+ {"issueId": 4, "title": "Story 4", 
+ "description": "Story 4", 
+ "createDt": "2022-05-25", "devName": null, "estPointVal": 2, 
+ "status": "ESTIMATED"}, {
+"issueId": 5, 
+ "title": "Story 5", 
+ "description": "Story 5", 
+ "createDt": "2022-05-25", 
+ "devName": null, 
+ "estPointVal": 8, 
+ "status": "ESTIMATED"}, 
+{"issueId": 6, "title": "Story 6", "description": "Story 6", "createDt": "2022-05-25", "devName": null, "estPointVal": 2, "status": "ESTIMATED"
+}, 
+{"issueId": 7, "title": "Story 7", "description": "Story 7", "createDt": "2022-05-25", "devName": null, "estPointVal": 3, "status": "ESTIMATED"
+}, 
+{"issueId": 8, "title": "Story 8", "description": "Story 8", "createDt": "2022-05-25", "devName": null, "estPointVal": 5, "status": "ESTIMATED"
+}, 
+{"issueId": 9, "title": "Story 9", "description": "Story 9", "createDt": "2022-05-25", "devName": null, "estPointVal": 5, "status": "COMPLETED"
+}, 
+{"issueId": 10, "title": "Story 10", "description": "Story 10", "createDt": "2022-05-25", "devName": null, "estPointVal": null, "status": "NEW"
+}
+]
+
+5. Create some bugs
+URL: http://localhost:8080/issuetracker/bug/addBug
+REQUEST:
+{
+"title" : "Bug 1",
+ "description" : "Bug 1", "devName" : "A"
+}
+RESPONSE:
+{
+"issueId": 1,
+ "title": "Bug 1",
+ "description": "Bug 1", "createDt": "2022-05-25",
+ "devName": "A",
+ "priority": "MINOR", "status": "NEW"
+}
+
+Similarly, create some more bugs. Also create bugs with no developer assigned and some with priority as 'CRITICAL'.
+
+6. Fetch all bugs
+URL: http://localhost:8080/issuetracker/bug/getBugList
+RESPONSE:
+[{"issueId": 1, "title": "Bug 1", "description": "Bug 1", "createDt": "2022-05-25", "devName": "A", "priority": "MINOR", "status": "NEW"}, {"issueId": 2, "title": "Bug 2", "description": "Bug 2", "createDt": "2022-05-25", "devName": "B", "priority": "CRITICAL", "status": "NEW"}, {"issueId": 3, "title": "Bug 3", "description": "Bug 3", "createDt": "2022-05-25", "devName": null, "priority": "MINOR", "status": "NEW"}
+]
+
+6. Fetch Plan
+URL: http://localhost:8080/issuetracker/plan
+RESPONSE:
+{"devList": [{"id": 1, "name": "A", "pointsPicked": 10}, {"id": 2,  "name": "B", "pointsPicked": 10}, {"id": 3, "name": "C", "pointsPicked": 10}], "plannedStoryList": [{"issueId": 1, "title": "Story 1", "description": "Story 1", "createDt": "2022-05-25", "devName": "A", "estPointVal": 8, "status": "ESTIMATED"}, {"issueId": 2, "title": "Story 2", "description": "Story 2", "createDt": "2022-05-25", "devName": "A", "estPointVal": 2, "status": "ESTIMATED"}, {"issueId": 3, "title": "Story 3", "description": "Story 3", "createDt": "2022-05-25", "devName": "B", "estPointVal": 8, "status": "ESTIMATED"}, {"issueId": 4, "title": "Story 4", "description": "Story 4", "createDt": "2022-05-25", "devName": "B", "estPointVal": 2, "status": "ESTIMATED"}, {"issueId": 5, "title": "Story 5", "description": "Story 5", "createDt": "2022-05-25", "devName": "C", "estPointVal": 8, "status": "ESTIMATED"}, {"issueId": 6, "title": "Story 6", "description": "Story 6", "createDt": "2022-05-25", "devName": "C", "estPointVal": 2, "status": "ESTIMATED"}], "backlogStoryList": [{"issueId": 7, "title": "Story 7", "description": "Story 7", "createDt": "2022-05-25", "devName": null, "estPointVal": 3, "status": "ESTIMATED"}, {"issueId": 8, "title": "Story 8", "description": "Story 8", "createDt": "2022-05-25", "devName": null, "estPointVal": 5, "status": "ESTIMATED"}, {"issueId": 10, "title": "Story 10", "description": "Story 10", "createDt": "2022-05-25", "devName": null, "estPointVal": null, "status": "NEW"}], "completedStoryList": [{"issueId": 9, "title": "Story 9", "description": "Story 9", "createDt": "2022-05-25", "devName": null, "estPointVal": 5, "status": "COMPLETED"}], "bugList": [ {"issueId": 1, "title": "Bug 1", "description": "Bug 1", "createDt": "2022-05-25", "devName": "A", "priority": "MINOR", "status": "NEW"}, {"issueId": 2, "title": "Bug 2", "description": "Bug 2", "createDt": "2022-05-25", "devName": "B", "priority": "CRITICAL", "status": "NEW"}, {"issueId": 3, "title": "Bug 3", "description": "Bug 3", "createDt": "2022-05-25", "devName": null, "priority": "MINOR", "status": "NEW"}]
+}
