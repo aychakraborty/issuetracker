@@ -56,8 +56,12 @@ public class StoryController {
 	 */
 	@PostMapping(value = "/story/addStory", consumes = "application/json")
 	public ResponseEntity<Story> addStory(@RequestBody Story story) {
-		Story newStory = storyHandler.addStory(story);
-		return new ResponseEntity<>(newStory, HttpStatus.CREATED);
+		try {
+			Story newStory = storyHandler.addStory(story);
+			return new ResponseEntity<>(newStory, HttpStatus.CREATED);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -69,8 +73,12 @@ public class StoryController {
 	 */
 	@PutMapping(value = "/story/updateStory/{issueId}", consumes = "application/json")
 	public ResponseEntity<Story> updateStory(@PathVariable("issueId") long issueId, @RequestBody Story story) {
-		Story existingStory = storyHandler.updateStory(issueId, story);
-		return new ResponseEntity<>(existingStory, HttpStatus.OK);
+		try {
+			Story existingStory = storyHandler.updateStory(issueId, story);
+			return new ResponseEntity<>(existingStory, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -80,9 +88,13 @@ public class StoryController {
 	 * @return ResponseEntity<Story>
 	 */
 	@DeleteMapping(value = "/story/deleteStory/{issueId}")
-	public ResponseEntity<Story> deleteStory(@PathVariable("issueId") long issueId) {
-		storyHandler.deleteStory(issueId);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<HttpStatus> deleteStory(@PathVariable("issueId") long issueId) {
+		try {
+			storyHandler.deleteStory(issueId);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**

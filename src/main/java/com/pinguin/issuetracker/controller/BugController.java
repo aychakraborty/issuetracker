@@ -56,8 +56,12 @@ public class BugController {
 	 */
 	@PostMapping(value = "/bug/addBug", consumes = "application/json")
 	public ResponseEntity<Bug> addBug(@RequestBody Bug bug) {
-		Bug newBug = bugHandler.addBug(bug);
-		return new ResponseEntity<>(newBug, HttpStatus.CREATED);
+		try {
+			Bug newBug = bugHandler.addBug(bug);
+			return new ResponseEntity<>(newBug, HttpStatus.CREATED);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -69,8 +73,12 @@ public class BugController {
 	 */
 	@PutMapping(value = "/bug/updateBug/{issueId}", consumes = "application/json")
 	public ResponseEntity<Bug> updateBug(@PathVariable("issueId") long issueId, @RequestBody Bug bug) {
-		Bug existingBug = bugHandler.updateBug(issueId, bug);
-		return new ResponseEntity<>(existingBug, HttpStatus.OK);
+		try {
+			Bug existingBug = bugHandler.updateBug(issueId, bug);
+			return new ResponseEntity<>(existingBug, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -81,8 +89,12 @@ public class BugController {
 	 */
 	@DeleteMapping(value = "/bug/deleteBug/{issueId}")
 	public ResponseEntity<Bug> deleteBug(@PathVariable("issueId") long issueId) {
-		bugHandler.deleteBug(issueId);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		try {
+			bugHandler.deleteBug(issueId);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**

@@ -44,8 +44,12 @@ public class DeveloperController {
 	 */
 	@PostMapping(value = "/dev/addDeveloper", consumes = "application/json")
 	public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
-		Developer newDeveloper = developerHandler.addDeveloper(developer);
-		return new ResponseEntity<>(newDeveloper, HttpStatus.CREATED);
+		try {
+			Developer newDeveloper = developerHandler.addDeveloper(developer);
+			return new ResponseEntity<>(newDeveloper, HttpStatus.CREATED);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -57,8 +61,12 @@ public class DeveloperController {
 	 */
 	@PutMapping(value = "/dev/updateDeveloper/{id}", consumes = "application/json")
 	public ResponseEntity<Developer> updateDeveloper(@PathVariable("id") long id, @RequestBody Developer developer) {
-		Developer existingDev = developerHandler.updateDeveloper(id, developer);
-		return new ResponseEntity<>(existingDev, HttpStatus.OK);
+		try {
+			Developer existingDev = developerHandler.updateDeveloper(id, developer);
+			return new ResponseEntity<>(existingDev, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -68,9 +76,13 @@ public class DeveloperController {
 	 * @return ResponseEntity<Developer>
 	 */
 	@DeleteMapping(value = "/dev/deleteDeveloper/{id}")
-	public ResponseEntity<Developer> deleteDeveloper(@PathVariable("id") long id) {
-		developerHandler.deleteDeveloper(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<HttpStatus> deleteDeveloper(@PathVariable("id") long id) {
+		try {
+			developerHandler.deleteDeveloper(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
