@@ -48,9 +48,10 @@ public class BugHandler {
 			throw new RuntimeException("No developers exist. Please add developers before assigning bugs.");
 		}
 		// Check if Developer's name is present in Developer table before assigning bug
-		if(Objects.nonNull(bug.getDevName())) {
-			Developer findDev = devList.stream().filter(dev -> dev.getName().equals(bug.getDevName())).findFirst().get();
-			if(Objects.isNull(findDev)) {
+		if (Objects.nonNull(bug.getDevName())) {
+			Developer findDev = devList.stream().filter(dev -> dev.getName().equals(bug.getDevName())).findFirst()
+					.get();
+			if (Objects.isNull(findDev)) {
 				throw new RuntimeException("Developer Name Not Found.");
 			}
 		}
@@ -74,9 +75,10 @@ public class BugHandler {
 			throw new RuntimeException("No developers exist. Please add developers before assigning bugs.");
 		}
 		// Check if Developer's name is present in Developer table before assigning bug
-		if(Objects.nonNull(bug.getDevName())) {
-			Developer findDev = devList.stream().filter(dev -> dev.getName().equals(bug.getDevName())).findFirst().get();
-			if(Objects.isNull(findDev)) {
+		if (Objects.nonNull(bug.getDevName())) {
+			Developer findDev = devList.stream().filter(dev -> dev.getName().equals(bug.getDevName())).findFirst()
+					.get();
+			if (Objects.isNull(findDev)) {
 				throw new RuntimeException("Developer Name Not Found.");
 			}
 		}
@@ -96,6 +98,10 @@ public class BugHandler {
 	}
 
 	public void deleteBug(long issueId) {
+		Optional<Bug> bug = bugDao.findById(issueId);
+		if (Objects.isNull(bug)) {
+			throw new RuntimeException("Bug Does Not Exist.");
+		}
 		bugDao.deleteById(issueId);
 	}
 

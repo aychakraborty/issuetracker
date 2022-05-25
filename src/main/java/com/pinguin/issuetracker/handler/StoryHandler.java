@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pinguin.issuetracker.dao.DeveloperDao;
 import com.pinguin.issuetracker.dao.StoryDao;
+import com.pinguin.issuetracker.entity.Bug;
 import com.pinguin.issuetracker.entity.Story;
 import com.pinguin.issuetracker.enums.Status;
 
@@ -78,6 +79,10 @@ public class StoryHandler {
 	}
 
 	public void deleteStory(long issueId) {
+		Optional<Story> story = storyDao.findById(issueId);
+		if (Objects.isNull(story)) {
+			throw new RuntimeException("Story Does Not Exist.");
+		}
 		storyDao.deleteById(issueId);
 	}
 
