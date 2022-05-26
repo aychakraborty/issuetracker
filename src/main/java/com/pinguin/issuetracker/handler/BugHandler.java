@@ -69,6 +69,9 @@ public class BugHandler {
 
 	public Bug updateBug(long issueId, Bug bug) {
 		Optional<Bug> bugData = bugDao.findById(issueId);
+		if (!bugData.isPresent()) {
+			throw new RuntimeException("Bug Does Not Exist.");
+		}
 		List<Developer> devList = developerDao.findAll();
 		// Check if Developers are present before assigning bug
 		if (devList.isEmpty() && Objects.nonNull(bug.getDevName())) {
@@ -99,7 +102,7 @@ public class BugHandler {
 
 	public void deleteBug(long issueId) {
 		Optional<Bug> bug = bugDao.findById(issueId);
-		if (Objects.isNull(bug)) {
+		if (!bug.isPresent()) {
 			throw new RuntimeException("Bug Does Not Exist.");
 		}
 		bugDao.deleteById(issueId);

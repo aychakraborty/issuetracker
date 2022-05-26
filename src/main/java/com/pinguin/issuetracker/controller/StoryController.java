@@ -56,12 +56,8 @@ public class StoryController {
 	 */
 	@PostMapping(value = "/story/addStory", consumes = "application/json")
 	public ResponseEntity<Story> addStory(@RequestBody Story story) {
-		try {
-			Story newStory = storyHandler.addStory(story);
-			return new ResponseEntity<>(newStory, HttpStatus.CREATED);
-		} catch (RuntimeException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+		Story newStory = storyHandler.addStory(story);
+		return new ResponseEntity<>(newStory, HttpStatus.CREATED);
 	}
 
 	/**

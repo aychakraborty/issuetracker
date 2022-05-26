@@ -74,6 +74,8 @@ public class StoryHandler {
 				existingStory.setStatus(Status.NEW);
 			}
 			storyDao.save(existingStory);
+		} else {
+			throw new RuntimeException("Story Does Not Exist.");
 		}
 		return existingStory;
 	}

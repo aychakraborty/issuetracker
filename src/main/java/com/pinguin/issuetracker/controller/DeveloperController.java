@@ -44,12 +44,8 @@ public class DeveloperController {
 	 */
 	@PostMapping(value = "/dev/addDeveloper", consumes = "application/json")
 	public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
-		try {
-			Developer newDeveloper = developerHandler.addDeveloper(developer);
-			return new ResponseEntity<>(newDeveloper, HttpStatus.CREATED);
-		} catch (RuntimeException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+		Developer newDeveloper = developerHandler.addDeveloper(developer);
+		return new ResponseEntity<>(newDeveloper, HttpStatus.CREATED);
 	}
 
 	/**

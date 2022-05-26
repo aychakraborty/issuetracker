@@ -1,7 +1,6 @@
 package com.pinguin.issuetracker.handler;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +35,15 @@ public class DeveloperHandler {
 			existingDev = devData.get();
 			existingDev.setName(developer.getName());
 			developerDao.save(existingDev);
+		} else {
+			throw new RuntimeException("Developer Does Not Exist.");
 		}
 		return existingDev;
 	}
 
 	public void deleteDeveloper(long id) {
 		Optional<Developer> dev = developerDao.findById(id);
-		if (Objects.isNull(dev)) {
+		if (!dev.isPresent()) {
 			throw new RuntimeException("Developer Does Not Exist.");
 		}
 		developerDao.deleteById(id);
